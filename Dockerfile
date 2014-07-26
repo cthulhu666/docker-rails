@@ -18,4 +18,4 @@ EXPOSE 22
 EXPOSE 80
 
 ENTRYPOINT ["entrypoint.sh"]
-# CMD ["nginx"]
+CMD ["nginx"]
