@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER jakub.gluszecki@gmail.com
 
 RUN apt-get update && \
-    apt-get install -y supervisor build-essential libssl-dev libreadline6 nginx openssh-server pwgen curl git-core && \
+    apt-get install -y supervisor build-essential libssl-dev libreadline6-dev nginx openssh-server pwgen curl git-core && \
     apt-get clean
 
 ADD config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
