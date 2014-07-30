@@ -2,16 +2,28 @@ FROM cthulhu666/docker-rbenv
 MAINTAINER jakub.gluszecki@gmail.com
 
 RUN apt-get update && \
-    apt-get install -y supervisor openssh-server pwgen
+    apt-get install -y supervisor
 
-ADD config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD bin/ /usr/sbin/
+ADD config /config
+
+ADD bin /usr/sbin
 RUN chmod 755 /usr/sbin/init.sh
 RUN chmod 755 /usr/sbin/entrypoint.sh
+RUN chmod 755 /usr/sbin/install-foreman.sh
+RUN chmod 755 /usr/sbin/bundle-install.sh
 
-RUN init.sh
+RUN ["init.sh"]
 
-EXPOSE 22 8080
+EXPOSE 8080
+
+ONBUILD ADD . /home/rails/rails-app
+ONBUILD RUN chown -R rails:rails /home/rails/rails-app
+ONBUILD RUN ["bundle-install.sh"]
+
+RUN ["install-foreman.sh"]
+
+VOLUME ["/home/rails/shared"]
+#RUN chown -R rails:rails /home/rails/log
 
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["/usr/bin/supervisord -c /etc/supervisor/supervisord.conf"]
+CMD ["app:help"]
