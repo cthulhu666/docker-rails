@@ -3,8 +3,8 @@
 set -eu
 
 # keep nginx in foreground so supervisor can manage it
-conf_file='/etc/nginx/nginx.conf'
-echo "daemon off;" >> "${conf_file}"
+#conf_file='/etc/nginx/nginx.conf'
+#echo "daemon off;" >> "${conf_file}"
 
 # setup passwordless sudo
 echo "rails         ALL = (ALL) NOPASSWD: ALL" > /etc/sudoers.d/rails

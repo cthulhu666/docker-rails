@@ -9,4 +9,7 @@ echo User: rails Password: $RAILS_PASSWORD
 
 /etc/init.d/ssh start
 
+# allow some initialization in child image
+[ -f /home/rails/init.sh ] && exec /home/rails/init.sh
+
 exec $@
