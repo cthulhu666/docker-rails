@@ -6,11 +6,10 @@ __Docker image for running Ruby on Rails applications__
 docker-rails is based on a minimal ubuntu 14.04 distribution.  
 There is 'rails' user with passwordless sudo capability.  
 There is ruby 2.1.2 installed via rbenv with bundler gem installed.  
-There is sshd running on port 22, so you can ssh to a running container (so you can deploy your application using Capistrano).  
-There is also nginx installed and running on port 80.  
+There is sshd running on port 22, so you can ssh to a running container (so you can deploy your application using Capistrano).
 
 To run a container:  
-`$ docker run --name rails -d -p 10022:22 -p 8080:80 cthulhu666/docker-rails`
+`$ docker run --name rails -d -p 10022:22 cthulhu666/docker-rails`
 
 To ssh to a running container first check for generated password in container logs:  
 
