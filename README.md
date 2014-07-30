@@ -12,6 +12,14 @@ Create Dockerfile inside your app source dir:
 
     echo "FROM cthulhu666/docker-rails:latest" > Dockerfile
     
+Docker-rails expects your application to have a Procfile, so create one, e.g.:
+
+    unicorn: /home/rails/.rbenv/shims/bundle exec unicorn -E production -c /home/rails/shared/config/unicorn.rb
+    sidekiq: /home/rails/.rbenv/shims/bundle exec sidekiq -e production
+    
+Its is important to use bundle exactly like that: `/home/rails/.rbenv/shims/bundle`.
+
+    
 Build your docker image:
 
     docker build -t [your_app_name] .
