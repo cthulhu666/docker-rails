@@ -23,7 +23,6 @@ ONBUILD RUN ["bundle-install.sh"]
 RUN ["install-foreman.sh"]
 
 VOLUME ["/home/rails/shared"]
-#RUN chown -R rails:rails /home/rails/log
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["app:help"]

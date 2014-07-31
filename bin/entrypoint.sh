@@ -4,13 +4,17 @@ set -eu
 
 sudo cp /config/supervisord.conf /etc/supervisor/conf.d/
 
-mkdir -p /home/rails/shared/log
-chown rails:rails /home/rails/shared/log
+if [ -d /home/rails/rails-app ]; then
+    mkdir -p /home/rails/shared/log
+    chown rails:rails /home/rails/shared/log
 
-rm -rf /home/rails/rails-app/log
-ln -s /home/rails/shared/log /home/rails/rails-app/log
+    [ -d /home/rails/rails-app/log ] && \
+        rm -rf /home/rails/rails-app/log && \
+        ln -s /home/rails/shared/log /home/rails/rails-app/log
 
-ln -s /home/rails/shared/config/application.yml /home/rails/rails-app/config/application.yml
+    [ -f /home/rails/shared/config/application.yml ] && \
+        ln -s /home/rails/shared/config/application.yml /home/rails/rails-app/config/application.yml
+fi
 
 appHelp () {
 	echo "Available options:"
