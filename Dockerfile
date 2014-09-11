@@ -9,7 +9,5 @@ RUN gem install foreman && rbenv rehash
 ADD bin /usr/sbin
 RUN sudo chmod 755 /usr/sbin/entrypoint.sh
 
-EXPOSE 8080
-
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["app:help"]
