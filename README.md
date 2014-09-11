@@ -1,29 +1,30 @@
 docker-rails
 ============
 
-__Docker image for running Ruby on Rails applications__
+__Docker image for running Ruby on Rails applications in production__
 
-docker-rails is based on a minimal ubuntu 14.04 distribution.  
-There is 'rails' user with passwordless sudo capability.  
+docker-rails is based on a debian jessie.  
+There is 'ruby' user with passwordless sudo capability.  
 There is ruby 2.1.2 installed via rbenv with bundler gem installed.  
 
 This image is meant as a base image; you need to dockerize your app first.
 Create Dockerfile inside your app source dir:
 
-    echo "FROM cthulhu666/docker-rails:latest" > Dockerfile
+    FROM cthulhu666/docker-rails
+    ADD . /app
+    RUN sudo chown -R ruby:ruby /app
+    WORKDIR /app
+    RUN bundle install --without development test --deployment --quiet
+    EXPOSE 3000
     
 Docker-rails expects your application to have a Procfile, so create one, e.g.:
 
-    unicorn: /home/rails/.rbenv/shims/bundle exec unicorn -E production -c /home/rails/shared/config/unicorn.rb
-    sidekiq: /home/rails/.rbenv/shims/bundle exec sidekiq -e production
-    
-Its is important to use bundle exactly like that: `/home/rails/.rbenv/shims/bundle`.
-
-    
+    unicorn: bundle exec unicorn -E production
+    sidekiq: bundle exec sidekiq -e production
+ 
 Build your docker image:
 
     docker build -t [your_app_name] .
-
 
 Run a container:  
     
